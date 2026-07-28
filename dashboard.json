@@ -1,0 +1,559 @@
+{
+  "version": "1.0",
+  "createTime": "2026-03-25T03:02:01.236Z",
+  "pages": [
+    {
+      "name": "首页",
+      "pageId": "page1",
+      "components": [
+        {
+          "id": 1774407680950.0532,
+          "name": "顶部导航菜单",
+          "type": "PlaceholderBrick",
+          "x": 20,
+          "y": 20,
+          "width": 1880,
+          "height": 80,
+          "rotation": 0,
+          "props": {
+            "title": "顶部导航菜单"
+          },
+          "api": null,
+          "isBusinessComponent": false,
+          "echartTheme": "",
+          "colorPalette": "",
+          "locked": false,
+          "hidden": false,
+          "zIndex": 0
+        },
+        {
+          "id": 1774407680951.4297,
+          "name": "统计卡片 1",
+          "type": "PlaceholderBrick",
+          "x": 20,
+          "y": 120,
+          "width": 450,
+          "height": 160,
+          "rotation": 0,
+          "props": {
+            "title": "统计卡片 1"
+          },
+          "api": null,
+          "isBusinessComponent": false,
+          "echartTheme": "",
+          "colorPalette": "",
+          "locked": false,
+          "hidden": false,
+          "zIndex": 1
+        },
+        {
+          "id": 1774407680952.5337,
+          "name": "统计卡片 2",
+          "type": "PlaceholderBrick",
+          "x": 490,
+          "y": 120,
+          "width": 450,
+          "height": 160,
+          "rotation": 0,
+          "props": {
+            "title": "统计卡片 2"
+          },
+          "api": null,
+          "isBusinessComponent": false,
+          "echartTheme": "",
+          "colorPalette": "",
+          "locked": false,
+          "hidden": false,
+          "zIndex": 2
+        },
+        {
+          "id": 1774407680953.5789,
+          "name": "统计卡片 3",
+          "type": "PlaceholderBrick",
+          "x": 960,
+          "y": 120,
+          "width": 450,
+          "height": 160,
+          "rotation": 0,
+          "props": {
+            "title": "统计卡片 3"
+          },
+          "api": null,
+          "isBusinessComponent": false,
+          "echartTheme": "",
+          "colorPalette": "",
+          "locked": false,
+          "hidden": false,
+          "zIndex": 3
+        },
+        {
+          "id": 1774407680955.0042,
+          "name": "统计卡片 4",
+          "type": "PlaceholderBrick",
+          "x": 1430,
+          "y": 120,
+          "width": 470,
+          "height": 160,
+          "rotation": 0,
+          "props": {
+            "title": "统计卡片 4"
+          },
+          "api": null,
+          "isBusinessComponent": false,
+          "echartTheme": "",
+          "colorPalette": "",
+          "locked": false,
+          "hidden": false,
+          "zIndex": 4
+        },
+        {
+          "id": 1774407680956.8064,
+          "name": "主要图表",
+          "type": "PlaceholderBrick",
+          "x": 20,
+          "y": 300,
+          "width": 940,
+          "height": 420,
+          "rotation": 0,
+          "props": {
+            "title": "主要图表"
+          },
+          "api": null,
+          "isBusinessComponent": false,
+          "echartTheme": "",
+          "colorPalette": "",
+          "locked": false,
+          "hidden": false,
+          "zIndex": 5
+        },
+        {
+          "id": 1774407680959.9885,
+          "name": "辅助图表",
+          "type": "PlaceholderBrick",
+          "x": 980,
+          "y": 300,
+          "width": 920,
+          "height": 420,
+          "rotation": 0,
+          "props": {
+            "title": "辅助图表"
+          },
+          "api": null,
+          "isBusinessComponent": false,
+          "echartTheme": "",
+          "colorPalette": "",
+          "locked": false,
+          "hidden": false,
+          "zIndex": 6
+        },
+        {
+          "id": 1774407680961.935,
+          "name": "数据表格",
+          "type": "PlaceholderBrick",
+          "x": 20,
+          "y": 740,
+          "width": 1880,
+          "height": 320,
+          "rotation": 0,
+          "props": {
+            "title": "数据表格"
+          },
+          "api": null,
+          "isBusinessComponent": false,
+          "echartTheme": "",
+          "colorPalette": "",
+          "locked": false,
+          "hidden": false,
+          "zIndex": 7
+        },
+        {
+          "id": 1774407686633.6445,
+          "name": "顶栏菜单",
+          "type": "HeaderMenuBrick",
+          "x": 20,
+          "y": 20,
+          "width": 1880,
+          "height": 80,
+          "rotation": 0,
+          "props": {
+            "title": "大屏可视化项目",
+            "titleColor": "#ffffff",
+            "titleSize": 32,
+            "menuItems": [
+              {
+                "name": "首页",
+                "pageIndex": 0
+              },
+              {
+                "name": "测试",
+                "pageIndex": 1
+              }
+            ],
+            "activeColor": "#4ab2e4",
+            "textColor": "rgba(255, 255, 255, 0.75)"
+          },
+          "api": {
+            "url": "http://localhost:3001",
+            "suffix": "",
+            "method": "GET",
+            "token": "",
+            "_t": 1774407702409
+          },
+          "isBusinessComponent": false,
+          "echartTheme": "",
+          "colorPalette": "",
+          "locked": false,
+          "hidden": false,
+          "zIndex": 8,
+          "dataSourceId": null,
+          "dataTransform": null,
+          "events": [],
+          "visibilityCondition": ""
+        },
+        {
+          "id": 1774407689372.8477,
+          "name": "水滴图",
+          "type": "WaterDropBrick",
+          "x": 20,
+          "y": 300,
+          "width": 940,
+          "height": 420,
+          "rotation": 0,
+          "props": {
+            "title": "完成率",
+            "value": 0.65,
+            "color": [
+              "#294D99",
+              "#156ACF",
+              "#1598ED",
+              "#45BDFF"
+            ],
+            "shape": "circle",
+            "backgroundColor": "#f0f0f0",
+            "label": {
+              "show": true,
+              "fontSize": 50,
+              "color": "#FFFFFF"
+            }
+          },
+          "api": null,
+          "isBusinessComponent": false,
+          "echartTheme": "",
+          "colorPalette": "",
+          "locked": false,
+          "hidden": false,
+          "zIndex": 9
+        },
+        {
+          "id": 1774407691151.3071,
+          "name": "水平柱状图",
+          "type": "HorizontalBarBrick",
+          "x": 980,
+          "y": 300,
+          "width": 920,
+          "height": 420,
+          "rotation": 0,
+          "props": {
+            "title": "产品销量排行",
+            "chartType": "bar",
+            "data": {
+              "yAxis": [
+                "产品A",
+                "产品B",
+                "产品C",
+                "产品D",
+                "产品E"
+              ],
+              "series": [
+                {
+                  "name": "销量",
+                  "data": [
+                    320,
+                    302,
+                    301,
+                    334,
+                    390
+                  ]
+                }
+              ]
+            },
+            "chartOption": [
+              {
+                "name": "销量",
+                "field": "销量",
+                "color": "#5470c6"
+              }
+            ]
+          },
+          "api": null,
+          "isBusinessComponent": false,
+          "echartTheme": "",
+          "colorPalette": "",
+          "locked": false,
+          "hidden": false,
+          "zIndex": 10
+        }
+      ]
+    },
+    {
+      "name": "页面 2",
+      "pageId": "page2",
+      "components": [
+        {
+          "id": 1774407710125.5254,
+          "name": "顶部导航菜单",
+          "type": "PlaceholderBrick",
+          "x": 20,
+          "y": 20,
+          "width": 1880,
+          "height": 80,
+          "rotation": 0,
+          "props": {
+            "title": "顶部导航菜单"
+          },
+          "api": null,
+          "isBusinessComponent": false,
+          "echartTheme": "",
+          "colorPalette": "",
+          "locked": false,
+          "hidden": false,
+          "zIndex": 0
+        },
+        {
+          "id": 1774407710130.1016,
+          "name": "左栏区域",
+          "type": "PlaceholderBrick",
+          "x": 20,
+          "y": 120,
+          "width": 610,
+          "height": 940,
+          "rotation": 0,
+          "props": {
+            "title": "左栏区域"
+          },
+          "api": null,
+          "isBusinessComponent": false,
+          "echartTheme": "",
+          "colorPalette": "",
+          "locked": false,
+          "hidden": false,
+          "zIndex": 1
+        },
+        {
+          "id": 1774407710133.4402,
+          "name": "中栏区域",
+          "type": "PlaceholderBrick",
+          "x": 650,
+          "y": 120,
+          "width": 610,
+          "height": 940,
+          "rotation": 0,
+          "props": {
+            "title": "中栏区域"
+          },
+          "api": null,
+          "isBusinessComponent": false,
+          "echartTheme": "",
+          "colorPalette": "",
+          "locked": false,
+          "hidden": false,
+          "zIndex": 2
+        },
+        {
+          "id": 1774407710136.89,
+          "name": "右栏区域",
+          "type": "PlaceholderBrick",
+          "x": 1280,
+          "y": 120,
+          "width": 620,
+          "height": 940,
+          "rotation": 0,
+          "props": {
+            "title": "右栏区域"
+          },
+          "api": null,
+          "isBusinessComponent": false,
+          "echartTheme": "",
+          "colorPalette": "",
+          "locked": false,
+          "hidden": false,
+          "zIndex": 3
+        },
+        {
+          "id": 1774407712590.407,
+          "name": "仪表盘",
+          "type": "GaugeBrick",
+          "x": 20,
+          "y": 120,
+          "width": 610,
+          "height": 940,
+          "rotation": 0,
+          "props": {
+            "title": "速度仪表盘",
+            "value": 75,
+            "min": 0,
+            "max": 100,
+            "unit": "km/h"
+          },
+          "api": null,
+          "isBusinessComponent": false,
+          "echartTheme": "",
+          "colorPalette": "",
+          "locked": false,
+          "hidden": false,
+          "zIndex": 4
+        },
+        {
+          "id": 1774407714257.0078,
+          "name": "水平柱状图",
+          "type": "HorizontalBarBrick",
+          "x": 650,
+          "y": 120,
+          "width": 610,
+          "height": 940,
+          "rotation": 0,
+          "props": {
+            "title": "产品销量排行",
+            "chartType": "bar",
+            "data": {
+              "yAxis": [
+                "产品A",
+                "产品B",
+                "产品C",
+                "产品D",
+                "产品E"
+              ],
+              "series": [
+                {
+                  "name": "销量",
+                  "data": [
+                    320,
+                    302,
+                    301,
+                    334,
+                    390
+                  ]
+                }
+              ]
+            },
+            "chartOption": [
+              {
+                "name": "销量",
+                "field": "销量",
+                "color": "#5470c6"
+              }
+            ]
+          },
+          "api": null,
+          "isBusinessComponent": false,
+          "echartTheme": "",
+          "colorPalette": "",
+          "locked": false,
+          "hidden": false,
+          "zIndex": 5
+        },
+        {
+          "id": 1774407717550.0564,
+          "name": "环形柱状图",
+          "type": "RingBarBrick",
+          "x": 1280,
+          "y": 120,
+          "width": 620,
+          "height": 940,
+          "rotation": 0,
+          "props": {
+            "title": "南丁格尔玫瑰图",
+            "data": [
+              {
+                "value": 40,
+                "name": "类别1"
+              },
+              {
+                "value": 38,
+                "name": "类别2"
+              },
+              {
+                "value": 32,
+                "name": "类别3"
+              },
+              {
+                "value": 30,
+                "name": "类别4"
+              },
+              {
+                "value": 28,
+                "name": "类别5"
+              },
+              {
+                "value": 26,
+                "name": "类别6"
+              },
+              {
+                "value": 22,
+                "name": "类别7"
+              },
+              {
+                "value": 18,
+                "name": "类别8"
+              }
+            ],
+            "roseType": "radius",
+            "chartOption": [
+              {
+                "name": "类别1",
+                "field": "类别1",
+                "color": "#161616ff"
+              },
+              {
+                "name": "类别2",
+                "field": "类别2",
+                "color": "#91cc75"
+              },
+              {
+                "name": "类别3",
+                "field": "类别3",
+                "color": "#fac858"
+              },
+              {
+                "name": "类别4",
+                "field": "类别4",
+                "color": "#ee6666"
+              },
+              {
+                "name": "类别5",
+                "field": "类别5",
+                "color": "#73c0de"
+              },
+              {
+                "name": "类别6",
+                "field": "类别6",
+                "color": "#3ba272"
+              },
+              {
+                "name": "类别7",
+                "field": "类别7",
+                "color": "#fc8452"
+              },
+              {
+                "name": "类别8",
+                "field": "类别8",
+                "color": "#9a60b4"
+              }
+            ]
+          },
+          "api": null,
+          "isBusinessComponent": false,
+          "echartTheme": "",
+          "colorPalette": "",
+          "locked": false,
+          "hidden": false,
+          "zIndex": 6
+        }
+      ]
+    }
+  ],
+  "projectSettings": {
+    "backgroundColor": "",
+    "backgroundImage": ""
+  }
+}

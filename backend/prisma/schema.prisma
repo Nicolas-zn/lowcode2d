@@ -1,0 +1,568 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum WorkspaceRole {
+  OWNER
+  ADMIN
+  EDITOR
+  VIEWER
+}
+
+enum ProjectVisibility {
+  PRIVATE
+  WORKSPACE
+  PUBLIC
+}
+
+enum ProjectStatus {
+  ACTIVE
+  ARCHIVED
+  TRASHED
+}
+
+enum PublishStatus {
+  DRAFT
+  PUBLISHED
+  UNPUBLISHED
+}
+
+enum MarketplaceItemStatus {
+  DRAFT
+  LISTED
+  UNLISTED
+  ARCHIVED
+}
+
+enum NotificationType {
+  SYSTEM
+  PUBLISH
+  FORK
+  SECURITY
+  ERROR
+}
+
+enum ResourceType {
+  REST_API
+  GRAPHQL
+  POSTGRESQL
+  MYSQL
+  REDIS
+  SUPABASE
+  FIREBASE
+  OPENAPI
+}
+
+model User {
+  id            String            @id @default(cuid())
+  email         String            @unique
+  passwordHash  String?
+  displayName   String?
+  avatarUrl     String?
+  emailVerified Boolean           @default(false)
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+  deletedAt     DateTime?
+
+  ownedWorkspaces Workspace[]       @relation("WorkspaceOwner")
+  memberships     WorkspaceMember[]
+  projects         Project[]         @relation("ProjectOwner")
+  refreshTokens    RefreshToken[]
+  favorites        Favorite[]
+  recentVisits     RecentVisit[]
+  auditLogs        AuditLog[]
+  uploadFiles      UploadFile[]
+  marketplaceItems MarketplaceItem[]     @relation("MarketplaceOwner")
+  marketplaceLikes MarketplaceLike[]
+  marketplaceComments MarketplaceComment[]
+  marketplaceTemplates MarketplaceTemplate[] @relation("MarketplaceTemplateOwner")
+  notifications    Notification[]
+  permissionPolicies PermissionPolicy[]
+
+  @@index([createdAt])
+}
+
+model RefreshToken {
+  id         String    @id @default(cuid())
+  tokenHash  String    @unique
+  userId     String
+  expiresAt  DateTime
+  revokedAt  DateTime?
+  createdAt  DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model Workspace {
+  id          String            @id @default(cuid())
+  name        String
+  slug        String            @unique
+  description String?
+  ownerId     String
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  deletedAt   DateTime?
+
+  owner       User              @relation("WorkspaceOwner", fields: [ownerId], references: [id], onDelete: Restrict)
+  members     WorkspaceMember[]
+  projects    Project[]
+  folders     Folder[]
+  resources   Resource[]
+  assets      Asset[]
+  auditLogs   AuditLog[]
+  marketplaceItems MarketplaceItem[]
+  marketplaceTemplates MarketplaceTemplate[]
+  notifications Notification[]
+  permissionPolicies PermissionPolicy[]
+
+  @@index([ownerId])
+  @@index([updatedAt])
+}
+
+model WorkspaceMember {
+  id          String        @id @default(cuid())
+  workspaceId String
+  userId      String
+  role        WorkspaceRole @default(OWNER)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([workspaceId, userId])
+  @@index([userId])
+}
+
+model Folder {
+  id          String    @id @default(cuid())
+  workspaceId String
+  parentId    String?
+  name        String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  parent    Folder?   @relation("FolderTree", fields: [parentId], references: [id], onDelete: SetNull)
+  children  Folder[]  @relation("FolderTree")
+  projects  Project[]
+
+  @@index([workspaceId])
+  @@index([parentId])
+}
+
+model Project {
+  id             String            @id @default(cuid())
+  workspaceId    String
+  ownerId        String
+  folderId       String?
+  name           String
+  description    String?
+  icon           String?
+  coverUrl       String?
+  visibility     ProjectVisibility @default(PRIVATE)
+  status         ProjectStatus     @default(ACTIVE)
+  forkedFromId   String?
+  starCount      Int               @default(0)
+  viewCount      Int               @default(0)
+  publishedAt    DateTime?
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+  deletedAt      DateTime?
+
+  workspace     Workspace      @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  owner         User           @relation("ProjectOwner", fields: [ownerId], references: [id], onDelete: Restrict)
+  folder        Folder?        @relation(fields: [folderId], references: [id], onDelete: SetNull)
+  forkedFrom    Project?       @relation("ProjectForks", fields: [forkedFromId], references: [id], onDelete: SetNull)
+  forks         Project[]      @relation("ProjectForks")
+  pages         Page[]
+  editorSchemas EditorSchema[]
+  drafts        Draft[]
+  snapshots     Snapshot[]
+  versions      Version[]
+  publishes     Publish[]
+  marketplaceItems MarketplaceItem[]
+  marketplaceTemplates MarketplaceTemplate[]
+  datasources   Datasource[]
+  favorites     Favorite[]
+  recentVisits  RecentVisit[]
+  tags          ProjectTag[]
+
+  @@index([workspaceId, updatedAt])
+  @@index([ownerId])
+  @@index([folderId])
+  @@index([status])
+}
+
+model Page {
+  id        String   @id @default(cuid())
+  projectId String
+  name      String
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  project       Project        @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  editorSchemas EditorSchema[]
+
+  @@index([projectId, order])
+}
+
+model EditorSchema {
+  id        String   @id @default(cuid())
+  projectId String
+  pageId    String?
+  schema    Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  page    Page?   @relation(fields: [pageId], references: [id], onDelete: Cascade)
+
+  @@index([projectId, updatedAt])
+  @@index([pageId])
+}
+
+model Draft {
+  id        String   @id @default(cuid())
+  projectId String
+  schema    Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId])
+}
+
+model Snapshot {
+  id        String   @id @default(cuid())
+  projectId String
+  schema    Json
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  project  Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  versions Version[]
+  publishes Publish[]
+  marketplaceItems MarketplaceItem[]
+  marketplaceTemplates MarketplaceTemplate[]
+
+  @@index([projectId, createdAt])
+}
+
+model Version {
+  id          String   @id @default(cuid())
+  projectId   String
+  snapshotId  String
+  version     Int
+  title       String?
+  description String?
+  createdAt   DateTime @default(now())
+
+  project  Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  snapshot Snapshot @relation(fields: [snapshotId], references: [id], onDelete: Restrict)
+
+  @@unique([projectId, version])
+  @@index([snapshotId])
+}
+
+model Publish {
+  id          String        @id @default(cuid())
+  projectId   String
+  snapshotId  String
+  slug        String        @unique
+  status      PublishStatus @default(DRAFT)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  project  Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  snapshot Snapshot @relation(fields: [snapshotId], references: [id], onDelete: Restrict)
+  marketplaceItem MarketplaceItem?
+
+  @@index([projectId])
+}
+
+model MarketplaceItem {
+  id           String                @id @default(cuid())
+  publishId    String                @unique
+  projectId    String
+  snapshotId   String
+  workspaceId  String
+  ownerId      String
+  title        String
+  summary      String?
+  description  String?
+  category     String?
+  tags         String[]              @default([])
+  coverUrl     String?
+  status       MarketplaceItemStatus @default(LISTED)
+  viewCount    Int                   @default(0)
+  forkCount    Int                   @default(0)
+  likeCount    Int                   @default(0)
+  commentCount Int                   @default(0)
+  listedAt     DateTime?
+  createdAt    DateTime              @default(now())
+  updatedAt    DateTime              @updatedAt
+
+  publish   Publish              @relation(fields: [publishId], references: [id], onDelete: Cascade)
+  project   Project              @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  snapshot  Snapshot             @relation(fields: [snapshotId], references: [id], onDelete: Restrict)
+  workspace Workspace            @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  owner     User                 @relation("MarketplaceOwner", fields: [ownerId], references: [id], onDelete: Restrict)
+  likes     MarketplaceLike[]
+  comments  MarketplaceComment[]
+  template  MarketplaceTemplate?
+
+  @@index([status, updatedAt])
+  @@index([workspaceId])
+  @@index([ownerId])
+  @@index([category])
+}
+
+model MarketplaceLike {
+  id        String   @id @default(cuid())
+  itemId    String
+  userId    String
+  createdAt DateTime @default(now())
+
+  item MarketplaceItem @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  user User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([itemId, userId])
+  @@index([userId])
+}
+
+model MarketplaceComment {
+  id        String    @id @default(cuid())
+  itemId    String
+  userId    String
+  content   String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  item MarketplaceItem @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  user User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([itemId, createdAt])
+  @@index([userId])
+}
+
+model MarketplaceTemplate {
+  id          String   @id @default(cuid())
+  itemId      String   @unique
+  projectId   String
+  snapshotId  String
+  workspaceId String
+  ownerId     String
+  title       String
+  summary     String?
+  category    String?
+  tags        String[] @default([])
+  metadata    Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  item      MarketplaceItem @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  project   Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  snapshot  Snapshot        @relation(fields: [snapshotId], references: [id], onDelete: Restrict)
+  workspace Workspace       @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  owner     User            @relation("MarketplaceTemplateOwner", fields: [ownerId], references: [id], onDelete: Restrict)
+
+  @@index([category])
+  @@index([workspaceId])
+  @@index([ownerId])
+}
+
+model PermissionPolicy {
+  id          String        @id @default(cuid())
+  workspaceId String
+  role        WorkspaceRole
+  resource    String
+  action      String
+  effect      String        @default("allow")
+  createdById String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  createdBy User?     @relation(fields: [createdById], references: [id], onDelete: SetNull)
+
+  @@unique([workspaceId, role, resource, action])
+  @@index([workspaceId, role])
+}
+
+model Notification {
+  id          String           @id @default(cuid())
+  userId      String
+  workspaceId String?
+  type        NotificationType @default(SYSTEM)
+  title       String
+  content     String?
+  metadata    Json?
+  readAt      DateTime?
+  createdAt   DateTime         @default(now())
+
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workspace Workspace? @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@index([userId, readAt, createdAt])
+  @@index([workspaceId, createdAt])
+  @@index([type])
+}
+
+model Resource {
+  id          String       @id @default(cuid())
+  workspaceId String
+  ownerId     String
+  type        ResourceType
+  name        String
+  config      Json
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  deletedAt   DateTime?
+
+  workspace  Workspace    @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  datasources Datasource[]
+
+  @@index([workspaceId, type])
+  @@index([ownerId])
+}
+
+model Datasource {
+  id         String   @id @default(cuid())
+  projectId  String
+  resourceId String?
+  name       String
+  config     Json
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  project  Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  resource Resource? @relation(fields: [resourceId], references: [id], onDelete: SetNull)
+
+  @@index([projectId])
+  @@index([resourceId])
+}
+
+model Asset {
+  id          String   @id @default(cuid())
+  workspaceId String
+  fileId      String
+  name        String
+  tags        String[] @default([])
+  metadata    Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  deletedAt   DateTime?
+
+  workspace Workspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  file      UploadFile @relation(fields: [fileId], references: [id], onDelete: Restrict)
+
+  @@index([workspaceId, updatedAt])
+}
+
+model UploadFile {
+  id        String   @id @default(cuid())
+  ownerId   String
+  url       String
+  hash      String
+  mime      String
+  size      Int
+  width     Int?
+  height    Int?
+  bucket    String
+  objectKey String
+  createdAt DateTime @default(now())
+
+  owner  User    @relation(fields: [ownerId], references: [id], onDelete: Restrict)
+  assets Asset[]
+
+  @@unique([hash])
+  @@index([ownerId])
+}
+
+model Favorite {
+  id        String   @id @default(cuid())
+  userId    String
+  projectId String
+  createdAt DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, projectId])
+  @@index([projectId])
+}
+
+model RecentVisit {
+  id        String   @id @default(cuid())
+  userId    String
+  projectId String
+  visitedAt DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, projectId])
+  @@index([userId, visitedAt])
+}
+
+model Tag {
+  id          String       @id @default(cuid())
+  workspaceId String
+  name        String
+  color       String?
+  createdAt   DateTime     @default(now())
+
+  projects ProjectTag[]
+
+  @@unique([workspaceId, name])
+}
+
+model ProjectTag {
+  projectId String
+  tagId     String
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  tag     Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([projectId, tagId])
+}
+
+model AuditLog {
+  id          String   @id @default(cuid())
+  workspaceId String?
+  actorId     String?
+  action      String
+  targetType  String
+  targetId    String?
+  metadata    Json?
+  createdAt   DateTime @default(now())
+
+  workspace Workspace? @relation(fields: [workspaceId], references: [id], onDelete: SetNull)
+  actor     User?      @relation(fields: [actorId], references: [id], onDelete: SetNull)
+
+  @@index([workspaceId, createdAt])
+  @@index([actorId])
+  @@index([targetType, targetId])
+}
+
+model LowCodeTemplate {
+  id        BigInt   @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  hashValue String?  @map("hashValue")
+  template  Json?
+
+  @@map("templowcode")
+}

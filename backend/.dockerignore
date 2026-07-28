@@ -1,0 +1,11 @@
+node_modules
+dist
+coverage
+.env
+.env.*
+postgres_data
+redis_data
+minio_data
+npm-debug.log*
+Dockerfile
+docker-compose.yml

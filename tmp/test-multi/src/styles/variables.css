@@ -1,0 +1,591 @@
+/**
+ * 全局 CSS 变量定义
+ * 用于响应式设计和主题配置
+ */
+
+:root {
+    /* ===== 设计稿尺寸 ===== */
+    --design-width: 1920;
+    --design-height: 1080;
+
+    /* ===== 缩放比例（由 JS 动态设置） ===== */
+    --scale: 1;
+
+    /* ===== 基础字体 ===== */
+    --base-font-size: 16px;
+    --font-size-small: 12px;
+    --font-size-medium: 14px;
+    --font-size-large: 18px;
+    --font-size-xlarge: 24px;
+
+    /* ===== 间距系统（基于 8px 网格） ===== */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    --spacing-xxl: 48px;
+
+    /* ===== 组件尺寸 ===== */
+    --component-min-width: 200px;
+    --component-min-height: 150px;
+    --component-default-width: 640px;
+    --component-default-height: 320px;
+
+    /* ===== 网格系统 ===== */
+    --grid-gutter: 20px;
+    --grid-columns: 12;
+
+    /* ===== 断点 ===== */
+    --breakpoint-xs: 576px;
+    --breakpoint-sm: 768px;
+    --breakpoint-md: 1024px;
+    --breakpoint-lg: 1280px;
+    --breakpoint-xl: 1920px;
+    --breakpoint-xxl: 2560px;
+
+    /* ===== 动画时长 ===== */
+    --transition-fast: 0.15s;
+    --transition-normal: 0.3s;
+    --transition-slow: 0.5s;
+
+    /* ===== 阴影 ===== */
+    --shadow-small: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.15);
+    --shadow-large: 0 8px 32px rgba(0, 0, 0, 0.2);
+
+    /* ===== 圆角 ===== */
+    --border-radius-small: 4px;
+    --border-radius-medium: 8px;
+    --border-radius-large: 12px;
+
+    /* ===== Z-index 层级 ===== */
+    --z-index-base: 1;
+    --z-index-dropdown: 1000;
+    --z-index-sticky: 1020;
+    --z-index-fixed: 1030;
+    --z-index-modal-backdrop: 1040;
+    --z-index-modal: 1050;
+    --z-index-popover: 1060;
+    --z-index-tooltip: 1070;
+
+    /* ===== 颜色系统（浅色主题） ===== */
+    --color-bg-primary: #ffffff;
+    --color-bg-secondary: #f8f9fa;
+    --color-bg-tertiary: #f5f7fa;
+    --color-text-primary: #213547;
+    --color-text-secondary: #666666;
+    --color-text-tertiary: #999999;
+    --color-border: #e4e7ed;
+    --color-border-light: #f0f0f0;
+    --color-scrollbar-track: #f1f1f1;
+    --color-scrollbar-thumb: #888;
+    --color-scrollbar-thumb-hover: #555;
+}
+
+/* ===== 暗色主题 ===== */
+[data-theme="dark"],
+.dark-theme {
+    /* 背景色 */
+    --color-bg-primary: #1a1a1a;
+    --color-bg-secondary: #242424;
+    --color-bg-tertiary: #2c2c2c;
+
+    /* 文字颜色 */
+    --color-text-primary: #e8e8e8;
+    --color-text-secondary: #b0b0b0;
+    --color-text-tertiary: #888888;
+
+    /* 边框颜色 */
+    --color-border: #3a3a3a;
+    --color-border-light: #2f2f2f;
+
+    /* 阴影（暗色主题下阴影更明显） */
+    --shadow-small: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.4);
+    --shadow-large: 0 8px 32px rgba(0, 0, 0, 0.5);
+
+    /* 滚动条颜色 */
+    --color-scrollbar-track: #2c2c2c;
+    --color-scrollbar-thumb: #4a4a4a;
+    --color-scrollbar-thumb-hover: #666666;
+}
+
+/* ===== 科技风主题 ===== */
+[data-theme="tech"],
+.tech-theme {
+    /* 背景色 - 深蓝科技感 */
+    --color-bg-primary: #0a0e27;
+    --color-bg-secondary: #0f1535;
+    --color-bg-tertiary: #141b3d;
+
+    /* 文字颜色 - 青蓝色调 */
+    --color-text-primary: #e0f2ff;
+    --color-text-secondary: #7dd3fc;
+    --color-text-tertiary: #60a5fa;
+
+    /* 边框颜色 - 霓虹蓝 */
+    --color-border: #1e40af;
+    --color-border-light: #1e3a8a;
+
+    /* 阴影 - 蓝色发光效果 */
+    --shadow-small: 0 2px 8px rgba(59, 130, 246, 0.3);
+    --shadow-medium: 0 4px 16px rgba(59, 130, 246, 0.4);
+    --shadow-large: 0 8px 32px rgba(59, 130, 246, 0.5);
+
+    /* 滚动条颜色 - 蓝色调 */
+    --color-scrollbar-track: #0f1535;
+    --color-scrollbar-thumb: #1e40af;
+    --color-scrollbar-thumb-hover: #3b82f6;
+}
+
+/* 科技风主题特殊效果 */
+.tech-theme {
+    background: linear-gradient(135deg, #0a0e27 0%, #141b3d 100%);
+}
+
+/* 科技风主题下的卡片和面板增加发光边框 */
+.tech-theme .el-card,
+.tech-theme .toolbar,
+.tech-theme .sidebar {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.15),
+        0 0 40px rgba(59, 130, 246, 0.1),
+        inset 0 0 60px rgba(59, 130, 246, 0.05);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+/* 科技风主题下的按钮发光效果 */
+.tech-theme .el-button--primary {
+    background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+    border-color: #3b82f6;
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+}
+
+.tech-theme .el-button--primary:hover {
+    box-shadow: 0 0 25px rgba(59, 130, 246, 0.8);
+}
+
+.tech-theme .el-button--success {
+    background: linear-gradient(135deg, #10b981 0%, #14b8a6 100%);
+    border-color: #10b981;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+}
+
+.tech-theme .el-button--success:hover {
+    box-shadow: 0 0 25px rgba(16, 185, 129, 0.8);
+}
+
+.tech-theme .el-button--danger {
+    background: linear-gradient(135deg, #ef4444 0%, #f43f5e 100%);
+    border-color: #ef4444;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
+}
+
+.tech-theme .el-button--danger:hover {
+    box-shadow: 0 0 25px rgba(239, 68, 68, 0.8);
+}
+
+.tech-theme .el-button--info {
+    background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+    border-color: #06b6d4;
+    box-shadow: 0 0 15px rgba(6, 182, 212, 0.5);
+}
+
+.tech-theme .el-button--info:hover {
+    box-shadow: 0 0 25px rgba(6, 182, 212, 0.8);
+}
+
+/* 科技风主题下的输入框和选择器 */
+.tech-theme .el-input__wrapper,
+.tech-theme .el-select .el-input__wrapper {
+    background-color: rgba(15, 21, 53, 0.8);
+    border-color: rgba(59, 130, 246, 0.3);
+    box-shadow: inset 0 0 10px rgba(59, 130, 246, 0.1);
+}
+
+.tech-theme .el-input__wrapper:hover,
+.tech-theme .el-select .el-input__wrapper:hover {
+    border-color: rgba(59, 130, 246, 0.5);
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+}
+
+.tech-theme .el-input__wrapper.is-focus,
+.tech-theme .el-select .el-input__wrapper.is-focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+}
+
+/* 科技风网格背景效果 */
+.tech-theme::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        linear-gradient(rgba(59, 130, 246, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* 科技风扫描线动画 */
+.tech-theme::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg,
+            transparent 0%,
+            rgba(59, 130, 246, 0.05) 50%,
+            transparent 100%);
+    background-size: 100% 200px;
+    animation: tech-scan 8s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes tech-scan {
+    0% {
+        background-position: 0 -200px;
+    }
+
+    100% {
+        background-position: 0 100vh;
+    }
+}
+
+/* 确保内容在网格和扫描线之上 */
+.tech-theme>* {
+    position: relative;
+    z-index: 1;
+}
+
+/* ===== 响应式字体（可选方案） ===== */
+@media screen and (min-width: 2560px) {
+    :root {
+        --base-font-size: 20px;
+        --spacing-md: 20px;
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    :root {
+        --base-font-size: 14px;
+        --spacing-md: 12px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    :root {
+        --base-font-size: 12px;
+        --spacing-md: 8px;
+        --component-default-width: 320px;
+        --component-default-height: 240px;
+    }
+}
+
+/* ===== 工具类 ===== */
+
+/* 响应式容器 */
+.container-fluid {
+    width: 100%;
+    padding-left: var(--spacing-md);
+    padding-right: var(--spacing-md);
+}
+
+.container {
+    max-width: var(--breakpoint-xl);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--spacing-md);
+    padding-right: var(--spacing-md);
+}
+
+/* 弹性布局工具 */
+.flex {
+    display: flex;
+}
+
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+/* 网格布局工具 */
+.grid {
+    display: grid;
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--grid-gutter);
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--grid-gutter);
+}
+
+.grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--grid-gutter);
+}
+
+/* 响应式网格 */
+.grid-auto {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: var(--grid-gutter);
+}
+
+/* 间距工具 */
+.m-0 {
+    margin: 0;
+}
+
+.m-xs {
+    margin: var(--spacing-xs);
+}
+
+.m-sm {
+    margin: var(--spacing-sm);
+}
+
+.m-md {
+    margin: var(--spacing-md);
+}
+
+.m-lg {
+    margin: var(--spacing-lg);
+}
+
+.m-xl {
+    margin: var(--spacing-xl);
+}
+
+.p-0 {
+    padding: 0;
+}
+
+.p-xs {
+    padding: var(--spacing-xs);
+}
+
+.p-sm {
+    padding: var(--spacing-sm);
+}
+
+.p-md {
+    padding: var(--spacing-md);
+}
+
+.p-lg {
+    padding: var(--spacing-lg);
+}
+
+.p-xl {
+    padding: var(--spacing-xl);
+}
+
+/* 文本工具 */
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+/* 响应式隐藏/显示 */
+@media screen and (max-width: 768px) {
+    .hidden-mobile {
+        display: none !important;
+    }
+}
+
+@media screen and (min-width: 769px) {
+    .visible-mobile {
+        display: none !important;
+    }
+}
+
+/* 防止文本溢出 */
+.text-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.text-line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.text-line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* ==================== Element Plus Tabs 组件样式修复 ==================== */
+
+/* 确保 tabs 内容区域可以滚动 */
+.el-tabs__content {
+    overflow-y: auto;
+    height: 100%;
+}
+
+.el-tab-pane {
+    height: 100%;
+}
+
+/* ==================== 自定义滚动条样式 ==================== */
+
+/* 全局滚动条 - WebKit 内核浏览器 (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.02);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb:active {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+/* 滚动条交叉处 */
+::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+/* Firefox 滚动条样式 */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.15) rgba(0, 0, 0, 0.02);
+}
+
+/* 抽屉和侧边栏滚动条更细 */
+.el-drawer__body::-webkit-scrollbar,
+.sidebar::-webkit-scrollbar,
+.el-tabs__content::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.el-drawer__body::-webkit-scrollbar-thumb,
+.sidebar::-webkit-scrollbar-thumb,
+.el-tabs__content::-webkit-scrollbar-thumb {
+    background: rgba(102, 126, 234, 0.2);
+    border-radius: 3px;
+}
+
+.el-drawer__body::-webkit-scrollbar-thumb:hover,
+.sidebar::-webkit-scrollbar-thumb:hover,
+.el-tabs__content::-webkit-scrollbar-thumb:hover {
+    background: rgba(102, 126, 234, 0.4);
+}
+
+/* 暗色主题滚动条 */
+.dark ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.dark ::-webkit-scrollbar-thumb:active {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+/* 科技风主题滚动条 */
+.tech-theme ::-webkit-scrollbar-track {
+    background: rgba(59, 130, 246, 0.05);
+}
+
+.tech-theme ::-webkit-scrollbar-thumb {
+    background: rgba(59, 130, 246, 0.3);
+    box-shadow: 0 0 6px rgba(59, 130, 246, 0.4);
+}
+
+.tech-theme ::-webkit-scrollbar-thumb:hover {
+    background: rgba(59, 130, 246, 0.5);
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.6);
+}
+
+/* 表格内滚动条更细 */
+.el-table__body-wrapper::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+/* 下拉菜单滚动条 */
+.el-select-dropdown::-webkit-scrollbar,
+.el-scrollbar__wrap::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+/* 代码编辑器/文本框滚动条 */
+.el-textarea__inner::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+/* 画布区域滚动条 */
+.canvas-scroll-area::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.canvas-scroll-area::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+.canvas-scroll-area::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.35);
+}

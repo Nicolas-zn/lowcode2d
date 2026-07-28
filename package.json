@@ -1,0 +1,42 @@
+{
+  "name": "lowcode2d",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "ua": "cd /Users/nicolas/.understand-anything/repo/understand-anything-plugin/packages/dashboard && GRAPH_DIR=$INIT_CWD npx vite --host 127.0.0.1 --port 5555 --strictPort",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.3.2",
+    "amfe-flexible": "^2.2.1",
+    "axios": "^1.13.6",
+    "bootstrap-icons": "^1.13.1",
+    "cesium": "^1.124.0",
+    "echarts": "^6.0.0",
+    "echarts-liquidfill": "^3.1.0",
+    "element-plus": "^2.13.0",
+    "file-saver": "^2.0.5",
+    "flv.js": "^1.6.2",
+    "hls.js": "^1.6.16",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^4.0.0",
+    "jszip": "^3.10.1",
+    "monaco-editor": "^0.55.1",
+    "moveable": "^0.53.0",
+    "pinia": "^3.0.4",
+    "pinia-plugin-persistedstate": "^4.7.1",
+    "three": "^0.170.0",
+    "vue": "^3.5.24",
+    "vue-router": "^4.6.4",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.1",
+    "postcss-pxtorem": "^6.1.0",
+    "vite": "^7.2.4",
+    "vite-plugin-cesium": "^1.2.23"
+  }
+}

@@ -1,0 +1,108 @@
+x-backend-environment: &backend-environment
+  NODE_ENV: production
+  DATABASE_URL: postgresql://postgres:postgres@postgres:5432/easyscreen?schema=public
+  CREDENTIAL_SECRET: ${CREDENTIAL_SECRET:-replace-with-a-32-byte-secret}
+  REDIS_URL: redis://redis:6379
+  FRONTEND_ORIGIN: ${FRONTEND_ORIGIN:-http://localhost:5173}
+  MINIO_ENDPOINT: minio
+  MINIO_USE_SSL: "false"
+  MINIO_ACCESS_KEY: minioadmin
+  MINIO_SECRET_KEY: minioadmin
+  MINIO_BUCKET: brickscreen
+  ASSET_PUBLIC_BASE_URL: ${ASSET_PUBLIC_BASE_URL:-/api/assets/public}
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: brickscreen-backend:latest
+    container_name: brickscreen-backend
+    restart: unless-stopped
+    environment: *backend-environment
+    ports:
+      - "${BACKEND_PORT:-3010}:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      minio:
+        condition: service_started
+    networks:
+      - brickscreen_internal
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('node:http').get('http://127.0.0.1:3000/api/health', r => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  db-push:
+    profiles:
+      - tools
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: build
+    environment: *backend-environment
+    command: ["npm", "run", "db:push"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - brickscreen_internal
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: brickscreen-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: easyscreen
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+    networks:
+      - brickscreen_internal
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d easyscreen"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: brickscreen-redis
+    restart: unless-stopped
+    volumes:
+      - ./redis_data:/data
+    networks:
+      - brickscreen_internal
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  minio:
+    image: minio/minio:latest
+    container_name: brickscreen-minio
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    volumes:
+      - ./minio_data:/data
+    networks:
+      - brickscreen_internal
+
+networks:
+  brickscreen_internal:
+    name: brickscreen-internal
+
+volumes:
+  postgres_data:
+  redis_data:
+  minio_data:

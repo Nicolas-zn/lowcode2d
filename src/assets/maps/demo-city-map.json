@@ -1,0 +1,53 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "name": "核心区" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[0, 0], [18, 0], [18, 18], [0, 18], [0, 0]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "东部新区" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[18, 2], [36, 2], [36, 18], [18, 18], [18, 2]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "南部产业带" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[6, 18], [30, 18], [30, 32], [6, 32], [6, 18]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "西部智造区" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[-14, 4], [0, 4], [0, 22], [-14, 22], [-14, 4]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "北部门户" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[8, -14], [28, -14], [28, 0], [8, 0], [8, -14]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "临港片区" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[32, 18], [48, 18], [48, 34], [32, 34], [32, 18]]]
+      }
+    }
+  ]
+}

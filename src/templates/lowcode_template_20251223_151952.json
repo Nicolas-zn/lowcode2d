@@ -1,0 +1,64 @@
+{
+  "version": "1.0",
+  "createTime": "2025-12-23T07:19:52.928Z",
+  "name": "测试模版2",
+  "description": "适合展示多个数据指标的面板",
+  "thumbnail": "📈",
+  "components": [
+    {
+      "id": 1766474304311.0872,
+      "name": "大标题",
+      "type": "HeaderBrick",
+      "x": 8,
+      "y": 4,
+      "width": 1910,
+      "height": 100,
+      "props": {
+        "title": "测试",
+        "subtitle": "实时数据监控与分析平台",
+        "backgroundColor": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+        "textColor": "#c12020"
+      },
+      "api": null
+    },
+    {
+      "id": 1766474351011.5142,
+      "name": "ECharts图表",
+      "type": "EChartBrick",
+      "x": 3,
+      "y": 108,
+      "width": 430,
+      "height": 770,
+      "props": {
+        "title": "ECharts图表",
+        "data": {
+          "xAxis": [
+            "周一",
+            "周二",
+            "周三",
+            "周四",
+            "周五",
+            "周六",
+            "周日"
+          ],
+          "series": [
+            {
+              "name": "销售额",
+              "data": [
+                120,
+                200,
+                150,
+                80,
+                70,
+                110,
+                130
+              ],
+              "color": "#667eea"
+            }
+          ]
+        }
+      },
+      "api": null
+    }
+  ]
+}

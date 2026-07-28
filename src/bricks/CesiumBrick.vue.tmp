@@ -1,0 +1,7 @@
+
+// 监听 events 变化
+watch(() => props.events, (newEvents) => {
+  if (interactionSystem && newEvents) {
+    interactionSystem.loadConfig({ interactions: newEvents })
+  }
+}, { deep: true })
